@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  background-color: $white-2;
+}
+
+button {
+  font-family: "Nunito", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}

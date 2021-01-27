@@ -1,11 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pathfinder</title>
-</head>
-<body>
-    <h1>Hello <span>World!</span></h1>
-</body>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="header__title">
+        <a href="" class="header__title__logo">Pathfinder.</a>
+      </div>
+
+      <nav class="header__nav">
+        <div class="header__nav__navbar">
+          <div class="header__nav__navbar__list-item">
+            <a href="#" class="item dropdown">
+              <span>Algorithms</span>
+              <img src="./images/chevron.svg" alt="chevron" />
+            </a>
+
+            <ul class="dropdown-list">
+              <li class="dropdown-list__item">Dijkstra</li>
+            </ul>
+          </div>
+        </div>
+        <div class="header__nav__action">
+          <button class="button-primary">Visualize</button>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="description">
+        Choose an algorithm and start visualizing!
+      </section>
+
+      <section class="board-sect">
+        <table id="board"></table>
+      </section>
+
+      <footer class="intro">
+        <ul class="node-list">
+          <li class="node-list__item"><span class="box start"></span> Start</li>
+          <li class="node-list__item"><span class="box end"></span> End</li>
+          <!-- <li class="node-list__item"><span class="box bomb"></span> Bomb</li> -->
+          <li class="node-list__item"><span class="box wall"></span> Wall</li>
+          <li class="node-list__item">
+            <span class="box unvisited"></span> Unvisited
+          </li>
+          <li class="node-list__item">
+            <span class="box visited-1"></span>
+            <span class="box visited-2"></span> Visited
+          </li>
+          <li class="node-list__item">
+            <span class="box short-path"></span> Shortest-path
+          </li>
+        </ul>
+      </footer>
+    </main>
+  </body>
 </html>
