@@ -1,0 +1,78 @@
+.board-section {
+  padding-inline: $px-1;
+}
+
+#board {
+  border-collapse: collapse;
+
+  td {
+    width: 25px;
+    height: 25px;
+  }
+
+  .unvisited {
+    border: 1px solid $board-cell;
+  }
+
+  .isStart {
+    background-image: url("images/arrow-right.svg");
+    background-size: cover;
+    background-position: center;
+    animation-name: specialNodes;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+
+  .isTarget {
+    background-image: url("images/end.svg");
+    background-size: cover;
+    background-position: center;
+    animation-name: specialNodes;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+
+  .wall {
+    animation-name: wallBuild;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+
+  .visited {
+    animation-name: visitedNodes;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+
+  .shortest-path {
+    background-color: $path;
+    animation-name: shortestPath;
+    animation-duration: 1.5s;
+    animation-timing-function: linear;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+}

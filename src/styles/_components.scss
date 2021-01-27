@@ -1,5 +1,5 @@
 .button-primary {
-  background-color: $blue-2;
+  background-color: $blue-1;
   color: $white-1;
   padding: $base-padding;
   border: 0;
@@ -66,23 +66,23 @@
     }
 
     .wall {
-      background-color: $brown-1;
+      background-color: $wall;
     }
 
     .unvisited {
-      border: 1px solid $blue-1;
+      border: 1px solid $board-cell;
     }
 
     .visited-1 {
-      background-color: $green-1;
+      background-color: $visited-4;
     }
 
     .visited-2 {
-      background-color: $pink-1;
+      background-color: $visited-5;
     }
 
     .short-path {
-      background-color: $yellow-1;
+      background-color: $path;
     }
   }
 }

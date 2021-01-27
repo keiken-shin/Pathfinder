@@ -1,0 +1,66 @@
+// Special Nodes Animation
+@keyframes specialNodes {
+  0% {
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Wall Build Animation
+@keyframes wallBuild {
+  0% {
+    transform: scale(0.3);
+    background-color: $wall;
+  }
+  50% {
+    transform: scale(1.2);
+    background-color: $wall;
+  }
+  100% {
+    transform: scale(1);
+    background-color: $wall;
+  }
+}
+
+// Visited Node Animation
+@keyframes visitedNodes {
+  0% {
+    transform: scale(0.3);
+    background-color: $visited-1;
+    border-radius: 100%;
+  }
+  50% {
+    background-color: $visited-2;
+  }
+  75% {
+    transform: scale(1.2);
+    background-color: $visited-3;
+  }
+  100% {
+    transform: scale(1);
+    background-color: $visited-4;
+  }
+}
+
+// Shortest Path Animation
+@keyframes shortestPath {
+  0% {
+    transform: scale(0.6);
+    background-color: $path;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: $path;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: $path;
+  }
+}
