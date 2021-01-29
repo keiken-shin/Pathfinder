@@ -1,25 +1,36 @@
-import { CustomNode, Node } from "./node";
+import depthFirstSearch from "./algorithms/unweighted/depth-first-search";
+import nodeAnimation from "./animations/node-animation";
+import { CustomNode, Node, ListOfCustomNode } from "./node";
 
 class Board {
-    isStart: string | null;     // Starting Point
-    isTarget: string | null;    // Target Point
-    allNodes: {
-        [propName: string]: CustomNode
-    };  // Contains instance of all the nodes present in board with "node_id" as "key" and "Node itself" as "value" 
-    grid: CustomNode[][];       // Storing all table rows "Array<Array<CustomNode>>"
+    isStart: string;                        // Starting Point
+    isTarget: string;                       // Target Point
+    allNodes: ListOfCustomNode;             // Contains instance of all the nodes present in board with "node_id" as "key" and "Node itself" as "value" 
+    grid: CustomNode[][];                   // Storing all table rows "Array<Array<CustomNode>>"
+    nodesInOrder: CustomNode[];             // Stores node in an order in which it is traversed
+    shortestPathNodesInOrder: CustomNode[]; // Contains shortest path nodes
+    
+    visualizeComponent: Element;            // Getting Visualize Button
+    descriptionComponent: Element;          // Getting Description Component
 
     constructor(
         public height: number,
         public width: number
     ){
-        this.isStart = null;
-        this.isTarget = null;
+        this.isStart = "";
+        this.isTarget = "";
         this.allNodes = {};
         this.grid = [];
+        this.nodesInOrder = [];
+        this.shortestPathNodesInOrder = [];
+
+        this.visualizeComponent = document.querySelector("#visualize")!;
+        this.descriptionComponent = document.querySelector(".description")!;
     }
 
     initialize() {
         this.createGrid();
+        this.toggleSwitch();
     }
 
     createGrid() {
@@ -52,7 +63,7 @@ class Board {
 
                 newNode = new Node(row, col, nodeStatus);   // Creating instance of node
                 currentArrayRow.push(newNode);              // Pushing new instance in row array
-                this.allNodes = { nodeId: newNode };        // Storing it inside allNodes
+                this.allNodes[nodeId] = newNode;       // Storing it inside allNodes
 
                 // Creating board cell
                 const tableCell: HTMLTableDataCellElement= document.createElement("td");
@@ -64,6 +75,40 @@ class Board {
             this.grid.push(currentArrayRow);
             tbody.append(currentRow);
             board.append(tbody);
+        }
+
+        // Visualize
+        this.visualizeComponent.addEventListener('click', () => {
+            const dataVisualize: string = this.visualizeComponent.getAttribute("data-visualize")!;
+            if(dataVisualize !== ""){
+                this.drawShortestPath(dataVisualize);
+            }
+        })
+    }
+
+    toggleSwitch(){
+        const algorithmsList = document.querySelector("#algorithms-list")!;
+        console.log(algorithmsList)
+        algorithmsList.addEventListener('mousedown', (e) => {
+            const el = e.target as HTMLElement;
+            const dataId = el.dataset.id;
+
+            if (dataId){
+                this.visualizeComponent.textContent = `Visualize ${dataId}`;
+                this.visualizeComponent.setAttribute("data-visualize", `${dataId}`);
+
+                if (dataId === 'DFS'){
+                    this.descriptionComponent.innerHTML = `Depth-first Search is <strong>&nbsp;unweighted&nbsp;</strong> and <strong>&nbsp;does not guarantee&nbsp;</strong> the shortest path!`
+                }
+
+            }
+        })
+    }
+
+    drawShortestPath(dataVisualize: string){
+        if(dataVisualize === "DFS"){
+            depthFirstSearch(this.allNodes, this.isStart, this.isTarget, this.grid, this.nodesInOrder);
+            nodeAnimation(this.nodesInOrder);
         }
     }
 }

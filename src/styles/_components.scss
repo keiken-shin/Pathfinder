@@ -16,8 +16,9 @@
 .description {
   font-size: 1.2rem;
   font-weight: 600;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: $py-2 $px-1;
 }
 

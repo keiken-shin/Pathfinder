@@ -7,6 +7,10 @@ interface CustomNode {
   previousNode: CustomNode | null
 }
 
+interface ListOfCustomNode{
+  [propNames: string]: CustomNode
+}
+
 class Node {
   id: string;
   distance: number;
@@ -25,5 +29,6 @@ class Node {
 
 export {
   Node,
-  CustomNode
+  CustomNode,
+  ListOfCustomNode
 }
