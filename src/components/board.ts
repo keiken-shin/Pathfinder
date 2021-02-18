@@ -1,17 +1,21 @@
 import depthFirstSearch from "./algorithms/unweighted/depth-first-search";
-import nodeAnimation from "./animations/node-animation";
+import { shortestDistance } from "./animations/index";
+import nodeTraverse from "./animations/node-traverse";
 import { CustomNode, Node, ListOfCustomNode } from "./node";
 
 class Board {
-    isStart: string;                        // Starting Point
-    isTarget: string;                       // Target Point
-    allNodes: ListOfCustomNode;             // Contains instance of all the nodes present in board with "node_id" as "key" and "Node itself" as "value" 
-    grid: CustomNode[][];                   // Storing all table rows "Array<Array<CustomNode>>"
-    nodesInOrder: CustomNode[];             // Stores node in an order in which it is traversed
-    shortestPathNodesInOrder: CustomNode[]; // Contains shortest path nodes
+    isStart: string;                            // Starting Point
+    isTarget: string;                           // Target Point
+    allNodes: ListOfCustomNode;                 // Contains instance of all the nodes present in board with "node_id" as "key" and "Node itself" as "value" 
+    grid: CustomNode[][];                       // Storing all table rows "Array<Array<CustomNode>>"
+    nodesInOrder: CustomNode[];                 // Stores node in an order in which it is traversed
+    shortestPathNodesInOrder: CustomNode[];     // Contains shortest path nodes
     
-    visualizeComponent: Element;            // Getting Visualize Button
-    descriptionComponent: Element;          // Getting Description Component
+    visualizeComponent: Element;                // Getting Visualize Button
+    descriptionComponent: Element;              // Getting Description Component
+
+    initialStart: {row: number, col: number}    // Initializing start node
+    initialTarget: {row: number, col: number}   // Initializing target node
 
     constructor(
         public height: number,
@@ -26,6 +30,15 @@ class Board {
 
         this.visualizeComponent = document.querySelector("#visualize")!;
         this.descriptionComponent = document.querySelector(".description")!;
+
+        this.initialStart = {
+            row: Math.floor(this.height / 2),
+            col: Math.floor(this.width / 4)
+        }
+        this.initialTarget = {
+            row: Math.floor(this.height / 2),
+            col: Math.floor(3 * this.width / 4)
+        }
     }
 
     initialize() {
@@ -51,10 +64,10 @@ class Board {
                     newNode: CustomNode;
 
                 // Calculating start and target position
-                if (row === Math.floor(this.height / 2) && col === Math.floor(this.width / 4)){
+                if (row === this.initialStart.row && col === this.initialStart.col){
                     nodeStatus = "isStart";     // marking current node as start node
                     this.isStart = nodeId;      // storing current node in isStart
-                }else if (row === Math.floor(this.height / 2) && col === Math.floor(3 * this.width / 4)){
+                }else if (row === this.initialTarget.row && col === this.initialTarget.col){
                     nodeStatus = "isTarget";    // marking current node as target node
                     this.isTarget = nodeId;     // storing current node in isTarget
                 }else{
@@ -88,7 +101,7 @@ class Board {
 
     toggleSwitch(){
         const algorithmsList = document.querySelector("#algorithms-list")!;
-        console.log(algorithmsList)
+
         algorithmsList.addEventListener('mousedown', (e) => {
             const el = e.target as HTMLElement;
             const dataId = el.dataset.id;
@@ -105,10 +118,12 @@ class Board {
         })
     }
 
-    drawShortestPath(dataVisualize: string){
+    async drawShortestPath(dataVisualize: string){
         if(dataVisualize === "DFS"){
             depthFirstSearch(this.allNodes, this.isStart, this.isTarget, this.grid, this.nodesInOrder);
-            nodeAnimation(this.nodesInOrder);
+            const traverse = await nodeTraverse(this.nodesInOrder);
+            console.log(this.nodesInOrder);
+            traverse && shortestDistance(this.shortestPathNodesInOrder, this.isStart, this.isTarget, this.allNodes);
         }
     }
 }
