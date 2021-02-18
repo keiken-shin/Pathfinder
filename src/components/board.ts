@@ -2,6 +2,7 @@ import depthFirstSearch from "./algorithms/unweighted/depth-first-search";
 import { shortestDistance } from "./animations/index";
 import nodeTraverse from "./animations/node-traverse";
 import { CustomNode, Node, ListOfCustomNode } from "./node";
+import { DATA } from "./data";
 
 class Board {
     isStart: string;                            // Starting Point
@@ -11,8 +12,8 @@ class Board {
     nodesInOrder: CustomNode[];                 // Stores node in an order in which it is traversed
     shortestPathNodesInOrder: CustomNode[];     // Contains shortest path nodes
     
-    visualizeComponent: Element;                // Getting Visualize Button
-    descriptionComponent: Element;              // Getting Description Component
+    visualizeComponent: HTMLElement;                // Getting Visualize Button
+    descriptionComponent: HTMLElement;              // Getting Description Component
 
     initialStart: {row: number, col: number}    // Initializing start node
     initialTarget: {row: number, col: number}   // Initializing target node
@@ -33,8 +34,8 @@ class Board {
         this.nodesInOrder = [];
         this.shortestPathNodesInOrder = [];
 
-        this.visualizeComponent = document.querySelector("#visualize")!;
-        this.descriptionComponent = document.querySelector(".description")!;
+        this.visualizeComponent = <HTMLElement>document.querySelector("#visualize")!;
+        this.descriptionComponent = <HTMLElement>document.querySelector(".description")!;
 
         this.initialStart = {
             row: Math.floor(this.height / 2),
@@ -120,11 +121,7 @@ class Board {
             if (dataId){
                 this.visualizeComponent.textContent = `Visualize ${dataId}`;
                 this.visualizeComponent.setAttribute("data-visualize", `${dataId}`);
-
-                if (dataId === 'DFS'){
-                    this.descriptionComponent.innerHTML = `Depth-first Search is <strong>&nbsp;unweighted&nbsp;</strong> and <strong>&nbsp;does not guarantee&nbsp;</strong> the shortest path!`
-                }
-
+                this.descriptionComponent.innerHTML = DATA[dataId];
             }
         })
     }
