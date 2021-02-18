@@ -32,10 +32,10 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|ico)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: "url-loader",
             options: {
               publicPath: "/images/",
               outputPath: "images",
@@ -49,6 +49,7 @@ module.exports = {
     new MiniCssExtractPlugin(),
     new HTMLWebPackPlugin({
       template: "./src/index.html",
+      favicon: "./src/favicon.ico",
       filename: "./index.html",
     }),
   ],
