@@ -24,7 +24,7 @@ const depthFirstSearch = (
 
         if (currentNode.id === targetNode) return true;
 
-        let currentNeighbors = getNeighbors(currentNode.id, grid);
+        let currentNeighbors = getNeighbors(currentNode.id, listOfNodes, grid);
         currentNeighbors.forEach(neighbor => {
             if (!exploredNode[neighbor]){
                 listOfNodes[neighbor].previousNode = currentNode;

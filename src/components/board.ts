@@ -17,10 +17,15 @@ class Board {
     initialStart: {row: number, col: number}    // Initializing start node
     initialTarget: {row: number, col: number}   // Initializing target node
 
+    pressedNodeStatus: string                   // On mouse event - stores pressed node status
+    mouseDown: boolean                          // To check whether the mouse is pressed or not
+    previouslySwitchedNode: CustomNode | null   // Tracking previously switched node
+    previouslyPressedNodeStatus: string         // Tracking previously pressed node status
+
     constructor(
         public height: number,
         public width: number
-    ){
+    ) {
         this.isStart = "";
         this.isTarget = "";
         this.allNodes = {};
@@ -39,11 +44,17 @@ class Board {
             row: Math.floor(this.height / 2),
             col: Math.floor(3 * this.width / 4)
         }
+
+        this.pressedNodeStatus = "";
+        this.mouseDown = false;
+        this.previouslySwitchedNode = null;
+        this.previouslyPressedNodeStatus = "";
     }
 
     initialize() {
         this.createGrid();
         this.toggleSwitch();
+        this.eventListeners();
     }
 
     createGrid() {
@@ -99,7 +110,7 @@ class Board {
         })
     }
 
-    toggleSwitch(){
+    toggleSwitch() {
         const algorithmsList = document.querySelector("#algorithms-list")!;
 
         algorithmsList.addEventListener('mousedown', (e) => {
@@ -118,12 +129,113 @@ class Board {
         })
     }
 
-    async drawShortestPath(dataVisualize: string){
+    async drawShortestPath(dataVisualize: string) {
         if(dataVisualize === "DFS"){
             depthFirstSearch(this.allNodes, this.isStart, this.isTarget, this.grid, this.nodesInOrder);
             const traverse = await nodeTraverse(this.nodesInOrder);
             console.log(this.nodesInOrder);
             traverse && shortestDistance(this.shortestPathNodesInOrder, this.isStart, this.isTarget, this.allNodes);
+        }
+    }
+
+    eventListeners() {
+        Object.entries(this.allNodes).map(node => {
+            const [key, value] = node;  // "key" represents ID & "value" represents NODE
+            const currentElement: HTMLElement= document.getElementById(key)!;    // Not using queryselector as it does not support id starting with digit
+        
+            // On mouse press event
+            currentElement.addEventListener("mousedown", (e) => {
+                const target: HTMLElement= (<HTMLElement>e.target);
+
+                this.mouseDown = true;
+
+                if(value.status === "isStart" || value.status === "isTarget") {
+                    this.pressedNodeStatus = value.status;
+                }else {
+                    this.changeNormalNode(target, value);
+                    console.log(node);
+                }
+            });
+
+            // On mouse release event
+            currentElement.addEventListener("mouseup", () => {
+                this.mouseDown = false;
+
+                if(this.pressedNodeStatus === "isStart") {
+                    this.isStart = key;
+                }else if(this.pressedNodeStatus === "isTarget") {
+                    this.isTarget = key;
+                }
+
+                this.pressedNodeStatus = "normal";
+            });
+
+            // On mouse hovering event
+            currentElement.addEventListener('mouseenter', (e) => {
+                if(this.mouseDown){
+                    const target: HTMLElement= (<HTMLElement>e.target);
+                    if(this.mouseDown && this.pressedNodeStatus !== "normal"){
+                        this.changeSpecialNode(target, value);
+                        if(this.pressedNodeStatus === "isStart") {
+                            this.isStart = key;
+                        }else if(this.pressedNodeStatus === "isTarget") {
+                            this.isTarget = key;
+                        }
+                    }else{
+                        this.changeNormalNode(target, value);
+                    }
+                }
+            });
+
+            // On mouse leave event
+            currentElement.addEventListener('mouseleave', (e) => {
+                const target: HTMLElement= (<HTMLElement>e.target);
+
+                if(this.mouseDown && this.pressedNodeStatus !== "normal") {
+                    this.changeSpecialNode(target, value);
+                }
+            })
+        })
+    }
+
+    // Changing normal node role from unvisited to wall or v.v.
+    changeNormalNode(target: HTMLElement, node: CustomNode) {
+        const relevantStatus = ["isStart", "isTarget"];
+
+        if(!relevantStatus.includes(node.status)) {
+            target.className = node.status === "unvisited" ? "wall" : "unvisited";
+            node.status = target.className === "unvisited" ? "unvisited" : "wall";
+        }
+    }
+
+    // Changing special (i.e., start, target) node position
+    changeSpecialNode(target: HTMLElement, node: CustomNode){
+        let previousElement: HTMLElement | null = null;
+
+        // If there exist previous switched node get that element
+        this.previouslySwitchedNode !== null
+        && (previousElement = document.getElementById(this.previouslySwitchedNode.id));
+
+        if(node.status !== "isStart" && node.status !== "isTarget") {
+            if(this.previouslySwitchedNode) {
+                this.previouslySwitchedNode.status = this.previouslyPressedNodeStatus;
+                previousElement!.className = this.previouslyPressedNodeStatus;
+
+                this.previouslySwitchedNode = null;
+
+                this.previouslyPressedNodeStatus = node.status;
+                target.className = this.pressedNodeStatus;
+                node.status = this.pressedNodeStatus;
+            }
+        }else if(node.status !== this.pressedNodeStatus) {
+            if(this.previouslySwitchedNode) {
+                this.previouslySwitchedNode.status = this.pressedNodeStatus;
+                previousElement!.className = this.pressedNodeStatus;
+            }
+        }else if(node.status === this.pressedNodeStatus) {
+            this.previouslySwitchedNode = node;
+            target.className = this.previouslyPressedNodeStatus;
+            node.status = this.previouslyPressedNodeStatus;
         }
     }
 }

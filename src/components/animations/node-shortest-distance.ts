@@ -3,22 +3,16 @@ import { NODE_ANIMATION_TIME } from "./index";
 
 const shortestDistance = (nodesInShortestOrder: CustomNode[], isStart: string, isTarget: string, allNodes: ListOfCustomNode) => {
     
-    nodesInShortestOrder.unshift(allNodes[isTarget]);
-    // Setting current node to target node's registered previous node
-    let currentNode: CustomNode | null= allNodes[isTarget].previousNode;
+    let currentNode: CustomNode | null= allNodes[isTarget];
 
     /* 
         Looping through while current node is not equal to start node 
         to get the shortest route that it has to traverse to reach its destination
     */
-    while(currentNode?.id !== isStart){
-        if(currentNode !== null){
-            nodesInShortestOrder.unshift(currentNode);
-            currentNode = allNodes[currentNode.id].previousNode;
-        }
+    while(currentNode !== null){
+        nodesInShortestOrder.unshift(currentNode);
+        currentNode = allNodes[currentNode.id].previousNode;
     }
-
-    nodesInShortestOrder.unshift(allNodes[isStart]);    // Passing start node at the beginning to get the staring position
     
     // Animating nodesInShortestOrder
     for (let i: number= 0; i < nodesInShortestOrder.length; i++){
