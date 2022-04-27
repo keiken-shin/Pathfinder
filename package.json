@@ -13,17 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/keiken-shin/Pathfinder.git"
+    "url": "git+https://github.com/keiken-shin/pathfinder.git"
   },
   "keywords": [
     "typescript"
   ],
-  "author": "Keiken Shin",
+  "author": "keiken-shin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/keiken-shin/Pathfinder/issues"
+    "url": "https://github.com/keiken-shin/pathfinder/issues"
   },
-  "homepage": "https://keiken-shin.github.io/Pathfinder/",
+  "homepage": "https://keiken-shin.github.io/pathfinder/",
   "devDependencies": {
     "css-loader": "^5.0.1",
     "file-loader": "^6.2.0",
