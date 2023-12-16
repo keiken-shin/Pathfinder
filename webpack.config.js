@@ -3,6 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HTMLWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  output: {
+    assetModuleFilename: 'images/[hash][ext][query]'
+  },
   module: {
     rules: [
       {
@@ -32,17 +35,9 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif|ico)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              publicPath: "/images/",
-              outputPath: "images",
-            },
-          },
-        ],
-      },
+        test: /\.(jpe?g|png|svg|gif|ico)$/i, 
+        type: 'asset/resource',
+      }
     ],
   },
   plugins: [
@@ -58,6 +53,8 @@ module.exports = {
   },
   devtool: "source-map",
   devServer: {
-    contentBase: "./dist",
+    static: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8080,
   },
 };
