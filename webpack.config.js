@@ -49,7 +49,10 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: [".ts", ".js", ".html"],
+    extensions: [".ts", ".js", '.json', ".html"],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   devtool: "source-map",
   devServer: {

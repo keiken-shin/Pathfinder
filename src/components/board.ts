@@ -1,8 +1,8 @@
-import depthFirstSearch from "./algorithms/unweighted/depth-first-search";
-import { shortestDistance } from "./animations/index";
-import nodeTraverse from "./animations/node-traverse";
-import { CustomNode, Node, ListOfCustomNode } from "./node";
-import { DATA } from "./data";
+import depthFirstSearch from "@/components/algorithms/unweighted/depth-first-search";
+import { shortestDistance } from "@/components/animations/index";
+import nodeTraverse from "@/components/animations/node-traverse";
+import { CustomNode, Node, ListOfCustomNode } from "@/components/node";
+import { DATA } from "@/components/data";
 
 class Board {
     isStart: string; // Starting Point

@@ -1,4 +1,4 @@
-import { CustomNode, ListOfCustomNode } from "../node";
+import { CustomNode, ListOfCustomNode } from "@/components/node";
 import { NODE_ANIMATION_TIME } from "./index";
 
 const shortestDistance = (nodesInShortestOrder: CustomNode[], isStart: string, isTarget: string, allNodes: ListOfCustomNode) => {

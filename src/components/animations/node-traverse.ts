@@ -1,4 +1,4 @@
-import { CustomNode } from "../node";
+import { CustomNode } from "@/components/node";
 import { NODE_ANIMATION_TIME } from "./index";
 
 const nodeTraverse = async(nodesInOrder: CustomNode[]) => {

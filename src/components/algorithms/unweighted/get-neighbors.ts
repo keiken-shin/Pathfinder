@@ -1,4 +1,4 @@
-import { CustomNode, ListOfCustomNode } from "../../node";
+import { CustomNode, ListOfCustomNode } from "@/components/node";
 
 const getNeighbors = (
     nodeId: string,

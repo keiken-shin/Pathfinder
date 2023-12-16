@@ -1,5 +1,5 @@
-import Board from './components/board';
-import "./style.scss";
+import Board from '@/components/board';
+import "@/style.scss";
 
 // Get Height of other elements in body
 const HEADER_HEIGHT: number = Number(document.querySelector(".header")?.clientHeight);
