@@ -15,7 +15,7 @@ This tool is created to teach myself about "Path-finding" algorithms and there i
 ## Algorithm Implemented
 
 -   [x] Depth first Search
--   [ ] Breadth first Search
+-   [x] Breadth first Search
 -   [ ] Greedy best first Search
 -   [ ] A\* algorithm
 -   [ ] Dijkstra's algorithm

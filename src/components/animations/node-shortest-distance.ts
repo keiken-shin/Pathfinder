@@ -2,16 +2,19 @@ import { CustomNode, ListOfCustomNode } from "@/components/node";
 import { NODE_ANIMATION_TIME } from "./index";
 
 const shortestDistance = (nodesInShortestOrder: CustomNode[], isStart: string, isTarget: string, allNodes: ListOfCustomNode) => {
-    
-    let currentNode: CustomNode | null= allNodes[isTarget];
+       
+    let currentNode: CustomNode | null = allNodes[isTarget];
+    const startNode: CustomNode | null = allNodes[isStart];
 
     /* 
         Looping through while current node is not equal to start node 
         to get the shortest route that it has to traverse to reach its destination
     */
-    while(currentNode !== null){
+    while(currentNode !== startNode){
         nodesInShortestOrder.unshift(currentNode);
-        currentNode = allNodes[currentNode.id].previousNode;
+        currentNode = currentNode.previousNode;
+
+        if (currentNode === startNode) nodesInShortestOrder.unshift(currentNode);
     }
     
     // Animating nodesInShortestOrder

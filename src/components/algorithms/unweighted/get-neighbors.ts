@@ -3,7 +3,8 @@ import { CustomNode, ListOfCustomNode } from "@/components/node";
 const getNeighbors = (
     nodeId: string,
     listOfNodes: ListOfCustomNode,
-    grid: CustomNode[][]
+    grid: CustomNode[][],
+    type: "DFS" | "BFS" = "DFS"
 ) => {
     const coordinates: string[] = nodeId.split("-");
     const x: number = parseInt(coordinates[0]);
@@ -16,7 +17,7 @@ const getNeighbors = (
     if (grid[x - 1] && grid[x - 1][y]) {
         potentialNeighbor = `${(x - 1).toString()}-${y.toString()}`; // make that coords potential neighbor
         if (listOfNodes[potentialNeighbor].status !== "wall") {
-            neighbor.unshift(potentialNeighbor); // Add potentialNeighbor at the beginning of neighbor array if node is not wall
+            type === "DFS" ? neighbor.unshift(potentialNeighbor) : neighbor.push(potentialNeighbor); // Add potentialNeighbor at the beginning of neighbor array if node is not wall
         }
     }
 
@@ -24,21 +25,21 @@ const getNeighbors = (
     if (grid[x][y + 1]) {
         potentialNeighbor = `${x.toString()}-${(y + 1).toString()}`; // make that coords potential neighbor
         if (listOfNodes[potentialNeighbor].status !== "wall") {
-            neighbor.unshift(potentialNeighbor);
+            type === "DFS" ? neighbor.unshift(potentialNeighbor) : neighbor.push(potentialNeighbor);
         }
     }
 
     if (grid[x + 1] && grid[x + 1][y]) {
         potentialNeighbor = `${(x + 1).toString()}-${y.toString()}`; // make that coords potential neighbor
         if (listOfNodes[potentialNeighbor].status !== "wall") {
-            neighbor.unshift(potentialNeighbor);
+            type === "DFS" ? neighbor.unshift(potentialNeighbor) : neighbor.push(potentialNeighbor);
         }
     }
 
     if (grid[x][y - 1]) {
         potentialNeighbor = `${x.toString()}-${(y - 1).toString()}`; // make that coords potential neighbor
         if (listOfNodes[potentialNeighbor].status !== "wall") {
-            neighbor.unshift(potentialNeighbor);
+            type === "DFS" ? neighbor.unshift(potentialNeighbor) : neighbor.push(potentialNeighbor);
         }
     }
 

@@ -3,6 +3,7 @@ import { shortestDistance } from "@/components/animations/index";
 import nodeTraverse from "@/components/animations/node-traverse";
 import { CustomNode, Node, ListOfCustomNode } from "@/components/node";
 import { DATA } from "@/components/data";
+import breadthFirstSearch from "./algorithms/unweighted/breadth-first-search";
 
 class Board {
     isStart: string; // Starting Point
@@ -139,24 +140,37 @@ class Board {
     }
 
     async drawShortestPath(dataVisualize: string) {
-        if (dataVisualize === "DFS") {
-            depthFirstSearch(
-                this.allNodes,
-                this.isStart,
-                this.isTarget,
-                this.grid,
-                this.nodesInOrder
-            );
-            const traverse = await nodeTraverse(this.nodesInOrder);
-            console.log(this.nodesInOrder);
-            traverse &&
-                shortestDistance(
-                    this.shortestPathNodesInOrder,
+        switch(dataVisualize) {
+            case "DFS":
+                depthFirstSearch(
+                    this.allNodes,
                     this.isStart,
                     this.isTarget,
-                    this.allNodes
+                    this.grid,
+                    this.nodesInOrder
                 );
+                break;
+
+            case "BFS":
+                breadthFirstSearch(
+                    this.allNodes,
+                    this.isStart,
+                    this.isTarget,
+                    this.grid,
+                    this.nodesInOrder
+                )
+                break;
         }
+
+        const traverse = await nodeTraverse(this.nodesInOrder);
+
+        traverse &&
+            shortestDistance(
+                this.shortestPathNodesInOrder,
+                this.isStart,
+                this.isTarget,
+                this.allNodes
+            );
     }
 
     eventListeners() {

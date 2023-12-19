@@ -7,24 +7,24 @@ const depthFirstSearch = (
     targetNode: string, 
     grid: CustomNode[][],
     nodesInOrder: CustomNode[]
-): boolean => {
+): CustomNode[] => {
 
-    if (startNode === "" || targetNode === "" || startNode === targetNode) return false;
+    if (startNode === "" || targetNode === "" || startNode === targetNode) return [];
 
-    let stack: CustomNode[] = [listOfNodes[startNode]]
+    const stack: CustomNode[] = [listOfNodes[startNode]]
     const exploredNode: {
         [propNames: string] : boolean
     } = {startNode: true}
 
     while (stack.length){
-        let currentNode: CustomNode = stack.pop()!;
+        const currentNode: CustomNode = stack.pop()!;
         exploredNode[currentNode.id] = true;
         nodesInOrder.push(currentNode);
         currentNode.status = "visited";
 
-        if (currentNode.id === targetNode) return true;
+        if (currentNode.id === targetNode) return stack;
 
-        let currentNeighbors = getNeighbors(currentNode.id, listOfNodes, grid);
+        const currentNeighbors = getNeighbors(currentNode.id, listOfNodes, grid, "DFS");
         currentNeighbors.forEach(neighbor => {
             if (!exploredNode[neighbor]){
                 listOfNodes[neighbor].previousNode = currentNode;
@@ -33,7 +33,7 @@ const depthFirstSearch = (
         })
     }
 
-    return false;
+    return stack;
 }
 
 export default depthFirstSearch;
